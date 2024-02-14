@@ -11,6 +11,8 @@ const common_1 = require("@nestjs/common");
 const books_module_1 = require("./books/books.module");
 const typeorm_1 = require("@nestjs/typeorm");
 const author_module_1 = require("./author/author.module");
+const users_module_1 = require("./users/users.module");
+const auth_module_1 = require("./auth/auth.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -25,6 +27,8 @@ exports.AppModule = AppModule = __decorate([
             }),
             books_module_1.BooksModule,
             author_module_1.AuthorModule,
+            users_module_1.UsersModule,
+            auth_module_1.AuthModule,
         ],
         controllers: [],
         providers: [],
