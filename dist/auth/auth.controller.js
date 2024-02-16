@@ -17,7 +17,8 @@ const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth.service");
 const register_dto_1 = require("./dto/register.dto");
 const login_dto_1 = require("./dto/login.dto");
-const auth_guard_1 = require("./guard/auth.guard");
+const rol_enum_1 = require("./enums/rol.enum");
+const auth_decorator_1 = require("./decorators/auth.decorator");
 let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
@@ -29,7 +30,7 @@ let AuthController = class AuthController {
         return this.authService.login(loginDto);
     }
     profile(req) {
-        return req.user;
+        return this.authService.profile(req.user);
     }
 };
 exports.AuthController = AuthController;
@@ -49,7 +50,7 @@ __decorate([
 ], AuthController.prototype, "login", null);
 __decorate([
     (0, common_1.Get)('profile'),
-    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, auth_decorator_1.Auth)(rol_enum_1.Role.ADMIN),
     __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),

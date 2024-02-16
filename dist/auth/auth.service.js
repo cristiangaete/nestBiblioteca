@@ -35,9 +35,15 @@ let AuthService = class AuthService {
         if (!isPasswprdValid) {
             throw new common_1.UnauthorizedException('Password is wrong');
         }
-        const payload = { email: user.email };
+        const payload = { email: user.email, role: user.role };
         const token = await this.jwtService.signAsync(payload);
         return { token, email };
+    }
+    async profile({ email, role }) {
+        if (role !== 'admin') {
+            throw new common_1.UnauthorizedException('No authorized ');
+        }
+        return await this.userService.findOneByEmail(email);
     }
 };
 exports.AuthService = AuthService;

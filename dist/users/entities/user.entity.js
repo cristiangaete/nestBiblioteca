@@ -33,7 +33,7 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ default: 'user' }),
     __metadata("design:type", String)
-], User.prototype, "rol", void 0);
+], User.prototype, "role", void 0);
 __decorate([
     (0, typeorm_1.DeleteDateColumn)(),
     __metadata("design:type", Date)

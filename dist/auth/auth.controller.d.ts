@@ -1,6 +1,12 @@
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
+interface RequestWithUser extends Request {
+    user: {
+        email: string;
+        role: string;
+    };
+}
 export declare class AuthController {
     private readonly authService;
     constructor(authService: AuthService);
@@ -9,5 +15,6 @@ export declare class AuthController {
         token: string;
         email: string;
     }>;
-    profile(req: any): any;
+    profile(req: RequestWithUser): Promise<import("../users/entities/user.entity").User>;
 }
+export {};

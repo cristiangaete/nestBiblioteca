@@ -3,6 +3,6 @@ export declare class User {
     name: string;
     email: string;
     password: string;
-    rol: string;
+    role: string;
     deletedAt: Date;
 }

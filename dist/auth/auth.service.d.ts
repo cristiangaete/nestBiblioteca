@@ -11,4 +11,8 @@ export declare class AuthService {
         token: string;
         email: string;
     }>;
+    profile({ email, role }: {
+        email: string;
+        role: string;
+    }): Promise<import("../users/entities/user.entity").User>;
 }
