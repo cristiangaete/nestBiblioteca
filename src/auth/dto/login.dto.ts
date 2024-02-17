@@ -2,6 +2,9 @@ import { Transform } from "class-transformer";
 import { IsEmail, IsString, MinLength } from "class-validator";
 
 export class LoginDto{
+    
+    id:number
+
     @IsEmail()
     email:string
 

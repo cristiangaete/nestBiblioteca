@@ -27,8 +27,14 @@ let UsersService = class UsersService {
     findOneByEmail(email) {
         return this.userRepository.findOneBy({ email });
     }
+    findOneEmailPassword(email) {
+        return this.userRepository.findOne({
+            where: { email },
+            select: ['id', 'name', 'email', 'password', 'role']
+        });
+    }
     findAll() {
-        return `This action returns all users`;
+        return this.userRepository.find();
     }
     findOne(id) {
         return `This action returns a #${id} user`;

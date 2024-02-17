@@ -24,10 +24,14 @@ let AuthService = class AuthService {
         if (user) {
             throw new common_1.BadRequestException('User already exist');
         }
-        return await this.userService.create({ name, email, password: await bcryptjs.hash(password, 10) });
+        await this.userService.create({ name, email, password: await bcryptjs.hash(password, 10) });
+        return {
+            name,
+            email,
+        };
     }
     async login({ email, password }) {
-        const user = await this.userService.findOneByEmail(email);
+        const user = await this.userService.findOneEmailPassword(email);
         if (!user) {
             throw new common_1.UnauthorizedException('Email is wrong');
         }
@@ -35,14 +39,11 @@ let AuthService = class AuthService {
         if (!isPasswprdValid) {
             throw new common_1.UnauthorizedException('Password is wrong');
         }
-        const payload = { email: user.email, role: user.role };
+        const payload = { id: user.id, email: user.email, role: user.role };
         const token = await this.jwtService.signAsync(payload);
         return { token, email };
     }
     async profile({ email, role }) {
-        if (role !== 'admin') {
-            throw new common_1.UnauthorizedException('No authorized ');
-        }
         return await this.userService.findOneByEmail(email);
     }
 };

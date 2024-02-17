@@ -4,9 +4,6 @@ export class CreateBookDto {
   @IsString()
   tittle: string;
 
-  // @IsString()
-  // author: string;
-
   @IsString()
   sumarry: string;
 
@@ -22,6 +19,8 @@ export class CreateBookDto {
   @IsString()
   @IsOptional()
   author:string;
+  
 
+  
 
 }

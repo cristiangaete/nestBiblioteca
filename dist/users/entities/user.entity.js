@@ -10,6 +10,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
+const book_entity_1 = require("../../books/entities/book.entity");
+const rol_enum_1 = require("../../common/enums/rol.enum");
 const typeorm_1 = require("typeorm");
 let User = class User {
 };
@@ -23,21 +25,25 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "name", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ unique: true, nullable: false }),
+    (0, typeorm_1.Column)({ unique: true, nullable: false, }),
     __metadata("design:type", String)
 ], User.prototype, "email", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ nullable: false }),
+    (0, typeorm_1.Column)({ nullable: false, select: false }),
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ default: 'user' }),
+    (0, typeorm_1.Column)({ default: rol_enum_1.Role.USER, enum: rol_enum_1.Role }),
     __metadata("design:type", String)
 ], User.prototype, "role", void 0);
 __decorate([
     (0, typeorm_1.DeleteDateColumn)(),
     __metadata("design:type", Date)
 ], User.prototype, "deletedAt", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => book_entity_1.Book, (book) => book.user),
+    __metadata("design:type", Array)
+], User.prototype, "books", void 0);
 exports.User = User = __decorate([
     (0, typeorm_1.Entity)()
 ], User);

@@ -1,25 +1,33 @@
-import { Column, DeleteDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Book } from 'src/books/entities/book.entity';
+import { Role } from '../../common/enums/rol.enum';
+import {
+  Column,
+  DeleteDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class User {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-   
-    @PrimaryGeneratedColumn()
-    id: number;
+  @Column()
+  name: string;
 
-    @Column()
-    name:string;
+  @Column({ unique: true,  nullable: false,})
+  email: string;
 
-    @Column({unique: true, nullable:false})
-    email:string;
+  @Column({ nullable: false, select: false })
+  password: string;
 
-    @Column({nullable:false})
-    password:string;
+  @Column({ default: Role.USER, enum: Role })
+  role: Role;
 
-    @Column({default:'user'})
-    role:string;
+  @DeleteDateColumn()
+  deletedAt: Date;
 
-    @DeleteDateColumn()
-    deletedAt: Date;
-
+  @OneToMany(() => Book, (book) => book.user)
+  books: Book[];
 }

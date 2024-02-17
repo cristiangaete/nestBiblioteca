@@ -23,14 +23,16 @@ let BooksService = class BooksService {
         this.bookRepository = bookRepository;
         this.authorRepository = authorRepository;
     }
-    async create(createBookDto) {
+    async create(createBookDto, user) {
         const author = await this.authorRepository.findOneBy({ name: createBookDto.author });
         if (!author) {
             throw new common_1.BadRequestException('author no found');
         }
+        console.log(user.email, user.id);
         return await this.bookRepository.save({
             ...createBookDto,
-            author
+            author: author,
+            userEmail: user.email,
         });
     }
     async findAll() {

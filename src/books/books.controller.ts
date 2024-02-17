@@ -2,14 +2,21 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { BooksService } from './books.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
+import { Auth } from '../auth/decorators/auth.decorator';
+import { Role } from '../common/enums/rol.enum';
+import { ActiveUser } from '../common/decorator/active-user.decorator';
+import { UserActiveInterface } from '../common/interface/user-active.interface';
 
+
+
+@Auth(Role.USER)
 @Controller('books')
 export class BooksController {
   constructor(private readonly booksService: BooksService) {}
 
   @Post()
-  create(@Body() createBookDto: CreateBookDto) {
-    return this.booksService.create(createBookDto);
+  create(@Body() createBookDto: CreateBookDto, @ActiveUser() user: UserActiveInterface) {
+    return this.booksService.create(createBookDto, user);
   }
 
   @Get()

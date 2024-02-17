@@ -20,12 +20,16 @@ export class AuthService {
       if (user) {
         throw new BadRequestException('User already exist');
       }
-      return await this.userService.create({name,email,password: await bcryptjs.hash(password,10)});
+       await this.userService.create({name,email,password: await bcryptjs.hash(password,10)});
 
+       return {
+        name,
+        email,
+      };
     }
 
     async login({email,password} :LoginDto) {
-        const user =  await this.userService.findOneByEmail(email);
+        const user =  await this.userService.findOneEmailPassword(email);
 
         if (!user) {
             throw new UnauthorizedException('Email is wrong');
@@ -36,17 +40,16 @@ export class AuthService {
             throw new UnauthorizedException('Password is wrong');
         }
 
-        const payload = {email: user.email, role: user.role};
-
+        const payload = {id: user.id, email: user.email, role: user.role};
         const token = await this.jwtService.signAsync(payload);
 
         return {token,email};
     }
 
     async profile({email,role}:{email:string, role:string}){
-        if (role !== 'admin') {
-            throw new UnauthorizedException('No authorized ');
-        }
+        // if (role !== 'admin') {
+        //     throw new UnauthorizedException('No authorized ');
+        // }
         return  await this.userService.findOneByEmail(email);
     }
     

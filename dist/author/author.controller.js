@@ -17,6 +17,8 @@ const common_1 = require("@nestjs/common");
 const author_service_1 = require("./author.service");
 const create_author_dto_1 = require("./dto/create-author.dto");
 const update_author_dto_1 = require("./dto/update-author.dto");
+const auth_decorator_1 = require("../auth/decorators/auth.decorator");
+const rol_enum_1 = require("../common/enums/rol.enum");
 let AuthorController = class AuthorController {
     constructor(authorService) {
         this.authorService = authorService;
@@ -74,6 +76,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AuthorController.prototype, "remove", null);
 exports.AuthorController = AuthorController = __decorate([
+    (0, auth_decorator_1.Auth)(rol_enum_1.Role.ADMIN),
     (0, common_1.Controller)('author'),
     __metadata("design:paramtypes", [author_service_1.AuthorService])
 ], AuthorController);

@@ -17,12 +17,15 @@ const common_1 = require("@nestjs/common");
 const books_service_1 = require("./books.service");
 const create_book_dto_1 = require("./dto/create-book.dto");
 const update_book_dto_1 = require("./dto/update-book.dto");
+const auth_decorator_1 = require("../auth/decorators/auth.decorator");
+const rol_enum_1 = require("../common/enums/rol.enum");
+const active_user_decorator_1 = require("../common/decorator/active-user.decorator");
 let BooksController = class BooksController {
     constructor(booksService) {
         this.booksService = booksService;
     }
-    create(createBookDto) {
-        return this.booksService.create(createBookDto);
+    create(createBookDto, user) {
+        return this.booksService.create(createBookDto, user);
     }
     findAll() {
         return this.booksService.findAll();
@@ -41,8 +44,9 @@ exports.BooksController = BooksController;
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, active_user_decorator_1.ActiveUser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_book_dto_1.CreateBookDto]),
+    __metadata("design:paramtypes", [create_book_dto_1.CreateBookDto, Object]),
     __metadata("design:returntype", void 0)
 ], BooksController.prototype, "create", null);
 __decorate([
@@ -74,6 +78,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], BooksController.prototype, "remove", null);
 exports.BooksController = BooksController = __decorate([
+    (0, auth_decorator_1.Auth)(rol_enum_1.Role.USER),
     (0, common_1.Controller)('books'),
     __metadata("design:paramtypes", [books_service_1.BooksService])
 ], BooksController);

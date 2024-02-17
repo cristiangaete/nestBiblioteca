@@ -2,13 +2,15 @@ import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { Book } from './entities/book.entity';
 import { Repository } from 'typeorm';
-import { Author } from 'src/author/entities/author.entity';
+import { Author } from '../author/entities/author.entity';
+import { UserActiveInterface } from '../common/interface/user-active.interface';
 export declare class BooksService {
     private readonly bookRepository;
     private readonly authorRepository;
     constructor(bookRepository: Repository<Book>, authorRepository: Repository<Author>);
-    create(createBookDto: CreateBookDto): Promise<{
+    create(createBookDto: CreateBookDto, user: UserActiveInterface): Promise<{
         author: Author;
+        userEmail: string;
         tittle: string;
         sumarry: string;
         isbn: string;

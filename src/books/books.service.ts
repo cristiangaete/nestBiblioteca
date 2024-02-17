@@ -4,7 +4,9 @@ import { UpdateBookDto } from './dto/update-book.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Book } from './entities/book.entity';
 import { Repository } from 'typeorm';
-import { Author } from 'src/author/entities/author.entity';
+import { Author } from '../author/entities/author.entity';
+import { UserActiveInterface } from '../common/interface/user-active.interface';
+import { emit } from 'process';
 
 @Injectable()
 export class BooksService {
@@ -16,14 +18,17 @@ export class BooksService {
     private readonly authorRepository: Repository<Author>,
   ) {}
 
-  async create(createBookDto: CreateBookDto) {
+  async create(createBookDto: CreateBookDto, user: UserActiveInterface) {
     const author = await this.authorRepository.findOneBy({name: createBookDto.author}); 
     if (!author) {
       throw new BadRequestException('author no found');
     }
+    console.log(user.email, user.id)
+
    return await this.bookRepository.save({
     ...createBookDto,
-    author
+    author: author,
+    userEmail: user.email,
    })
    
   }
