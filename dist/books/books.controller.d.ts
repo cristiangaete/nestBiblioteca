@@ -14,8 +14,8 @@ export declare class BooksController {
         genre: string;
         lenguaje: string;
     } & import("./entities/book.entity").Book>;
-    findAll(): Promise<import("./entities/book.entity").Book[]>;
-    findOne(id: string): Promise<import("./entities/book.entity").Book>;
-    update(id: string, updateBookDto: UpdateBookDto): Promise<void>;
-    remove(id: string): Promise<import("typeorm").UpdateResult>;
+    findAll(user: UserActiveInterface): Promise<import("./entities/book.entity").Book[]>;
+    findOne(id: string, user: UserActiveInterface): Promise<import("./entities/book.entity").Book>;
+    update(id: string, updateBookDto: UpdateBookDto, user: UserActiveInterface): Promise<import("typeorm").UpdateResult>;
+    remove(id: string, user: UserActiveInterface): Promise<import("typeorm").UpdateResult>;
 }

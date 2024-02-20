@@ -17,8 +17,10 @@ export declare class BooksService {
         genre: string;
         lenguaje: string;
     } & Book>;
-    findAll(): Promise<Book[]>;
-    findOne(id: number): Promise<Book>;
-    update(id: number, updateBookDto: UpdateBookDto): Promise<void>;
-    remove(id: number): Promise<import("typeorm").UpdateResult>;
+    findAll(user: UserActiveInterface): Promise<Book[]>;
+    findOne(id: number, user: UserActiveInterface): Promise<Book>;
+    update(id: number, updateBookDto: UpdateBookDto, user: UserActiveInterface): Promise<import("typeorm").UpdateResult>;
+    remove(id: number, user: UserActiveInterface): Promise<import("typeorm").UpdateResult>;
+    private validationOwnerShip;
+    private validateAuthor;
 }

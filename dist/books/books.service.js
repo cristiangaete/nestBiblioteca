@@ -18,16 +18,14 @@ const typeorm_1 = require("@nestjs/typeorm");
 const book_entity_1 = require("./entities/book.entity");
 const typeorm_2 = require("typeorm");
 const author_entity_1 = require("../author/entities/author.entity");
+const rol_enum_1 = require("../common/enums/rol.enum");
 let BooksService = class BooksService {
     constructor(bookRepository, authorRepository) {
         this.bookRepository = bookRepository;
         this.authorRepository = authorRepository;
     }
     async create(createBookDto, user) {
-        const author = await this.authorRepository.findOneBy({ name: createBookDto.author });
-        if (!author) {
-            throw new common_1.BadRequestException('author no found');
-        }
+        const author = await this.validateAuthor(createBookDto.author);
         console.log(user.email, user.id);
         return await this.bookRepository.save({
             ...createBookDto,
@@ -35,16 +33,48 @@ let BooksService = class BooksService {
             userEmail: user.email,
         });
     }
-    async findAll() {
-        return await this.bookRepository.find();
+    async findAll(user) {
+        if (user.role === rol_enum_1.Role.ADMIN) {
+            return await this.bookRepository.find();
+        }
+        return await this.bookRepository.find({
+            where: { userEmail: user.email },
+        });
     }
-    async findOne(id) {
-        return await this.bookRepository.findOneBy({ id });
+    async findOne(id, user) {
+        const book = await this.bookRepository.findOneBy({ id });
+        if (!book) {
+            throw new common_1.BadRequestException('Cat not found');
+        }
+        this.validationOwnerShip(book, user);
+        return book;
     }
-    async update(id, updateBookDto) {
+    async update(id, updateBookDto, user) {
+        const book = await this.findOne(id, user);
+        const author = await this.validateAuthor(updateBookDto.author);
+        return await this.bookRepository.update(id, {
+            ...updateBookDto,
+            author: updateBookDto.author ? await this.validateAuthor(updateBookDto.author) : undefined,
+            userEmail: user.email
+        });
     }
-    async remove(id) {
+    async remove(id, user) {
+        await this.findOne(id, user);
         return await this.bookRepository.softDelete(id);
+    }
+    validationOwnerShip(book, user) {
+        if (user.role !== rol_enum_1.Role.ADMIN && book.userEmail !== user.email) {
+            throw new common_1.UnauthorizedException();
+        }
+    }
+    async validateAuthor(author) {
+        const authorEntity = await this.authorRepository.findOneBy({
+            name: author,
+        });
+        if (!author) {
+            throw new common_1.BadRequestException('author no found');
+        }
+        return authorEntity;
     }
 };
 exports.BooksService = BooksService;

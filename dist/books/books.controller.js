@@ -27,17 +27,17 @@ let BooksController = class BooksController {
     create(createBookDto, user) {
         return this.booksService.create(createBookDto, user);
     }
-    findAll() {
-        return this.booksService.findAll();
+    findAll(user) {
+        return this.booksService.findAll(user);
     }
-    findOne(id) {
-        return this.booksService.findOne(+id);
+    findOne(id, user) {
+        return this.booksService.findOne(+id, user);
     }
-    update(id, updateBookDto) {
-        return this.booksService.update(+id, updateBookDto);
+    update(id, updateBookDto, user) {
+        return this.booksService.update(+id, updateBookDto, user);
     }
-    remove(id) {
-        return this.booksService.remove(+id);
+    remove(id, user) {
+        return this.booksService.remove(+id, user);
     }
 };
 exports.BooksController = BooksController;
@@ -51,30 +51,34 @@ __decorate([
 ], BooksController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
+    __param(0, (0, active_user_decorator_1.ActiveUser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], BooksController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, active_user_decorator_1.ActiveUser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", void 0)
 ], BooksController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
+    __param(2, (0, active_user_decorator_1.ActiveUser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_book_dto_1.UpdateBookDto]),
+    __metadata("design:paramtypes", [String, update_book_dto_1.UpdateBookDto, Object]),
     __metadata("design:returntype", void 0)
 ], BooksController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, active_user_decorator_1.ActiveUser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", void 0)
 ], BooksController.prototype, "remove", null);
 exports.BooksController = BooksController = __decorate([
