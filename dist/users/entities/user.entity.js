@@ -10,10 +10,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
+const openapi = require("@nestjs/swagger");
 const book_entity_1 = require("../../books/entities/book.entity");
 const rol_enum_1 = require("../../common/enums/rol.enum");
 const typeorm_1 = require("typeorm");
+const subject_entity_1 = require("../../subject/entities/subject.entity");
 let User = class User {
+    static _OPENAPI_METADATA_FACTORY() {
+        return { id: { required: true, type: () => Number }, name: { required: true, type: () => String }, email: { required: true, type: () => String }, password: { required: true, type: () => String }, role: { required: true, enum: require("../../common/enums/rol.enum").Role }, deletedAt: { required: true, type: () => Date }, books: { required: true, type: () => [require("../../books/entities/book.entity").Book] }, subject: { required: true, type: () => [require("../../subject/entities/subject.entity").Subject] } };
+    }
 };
 exports.User = User;
 __decorate([
@@ -44,6 +49,10 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => book_entity_1.Book, (book) => book.user),
     __metadata("design:type", Array)
 ], User.prototype, "books", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => subject_entity_1.Subject, (subject) => subject.user),
+    __metadata("design:type", Array)
+], User.prototype, "subject", void 0);
 exports.User = User = __decorate([
     (0, typeorm_1.Entity)()
 ], User);

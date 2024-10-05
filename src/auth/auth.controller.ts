@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, Request, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
@@ -9,6 +9,8 @@ import { Role } from '../common/enums/rol.enum';
 import { Auth } from './decorators/auth.decorator';
 import { ActiveUser } from 'src/common/decorator/active-user.decorator';
 import { UserActiveInterface } from 'src/common/interface/user-active.interface';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { UpdateProfileDto } from './dto/update-profile.dto';
 
 interface RequestWithUser extends Request{
     user:{
@@ -17,7 +19,7 @@ interface RequestWithUser extends Request{
     }
 }
 
-
+@ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
 
@@ -44,6 +46,7 @@ export class AuthController {
     //     return this.authService.profile(req.user);
     // }
 
+    @ApiBearerAuth()
     @Get('profile')
     @Auth(Role.USER)
     profile(@ActiveUser() user: UserActiveInterface){
@@ -51,4 +54,11 @@ export class AuthController {
         return this.authService.profile(user);
     }
 
+    @ApiBearerAuth()
+    @Patch('profile/:id')
+    @Auth(Role.USER)
+    updateProfile(@Param('id') id: string,@Body() updateProfileDto: UpdateProfileDto, @ActiveUser() user: UserActiveInterface){
+        // return req.user;
+        return this.authService.updateProfile(+id, updateProfileDto, user);
+    }
 }

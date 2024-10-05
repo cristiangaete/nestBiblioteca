@@ -5,6 +5,11 @@ import { AuthorModule } from './author/author.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 
+import { SubjectModule } from './subject/subject.module';
+import { join } from 'path';
+import { ServeStaticModule } from '@nestjs/serve-static';
+
+
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -17,6 +22,11 @@ import { AuthModule } from './auth/auth.module';
     AuthorModule,
     UsersModule,
     AuthModule,
+    SubjectModule,
+    // GenreModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'uploads'), // Carpeta donde se guardan las imágenes
+    }),
   ],
   controllers: [],
   providers: [],

@@ -6,9 +6,12 @@ import { Auth } from '../auth/decorators/auth.decorator';
 import { Role } from '../common/enums/rol.enum';
 import { ActiveUser } from '../common/decorator/active-user.decorator';
 import { UserActiveInterface } from '../common/interface/user-active.interface';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 
 
+@ApiTags('Books')
+@ApiBearerAuth()
 @Auth(Role.USER)
 @Controller('books')
 export class BooksController {
@@ -31,6 +34,7 @@ export class BooksController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateBookDto: UpdateBookDto, @ActiveUser() user: UserActiveInterface) {
+    console.log("controller: ", id,updateBookDto,user)
     return this.booksService.update(+id, updateBookDto, user);
   }
 

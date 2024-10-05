@@ -4,6 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { UserActiveInterface } from 'src/common/interface/user-active.interface';
 
 @Injectable()
 export class UsersService {
@@ -36,8 +37,16 @@ export class UsersService {
     return `This action returns a #${id} user`;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: number, updateUserDto: UpdateUserDto, user: UserActiveInterface) {
+    console.log(updateUserDto)
+    console.log(user.email)
+
+    return await this.userRepository.update(id,{
+      ...updateUserDto,
+      // author: updateBookDto.author ? await this.validateAuthor(updateBookDto.author):undefined,
+      // genre: genre,
+      email: user.email
+    });
   }
 
   remove(id: number) {

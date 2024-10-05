@@ -10,8 +10,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateBookDto = void 0;
+const openapi = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class CreateBookDto {
+    static _OPENAPI_METADATA_FACTORY() {
+        return { tittle: { required: true, type: () => String }, sumarry: { required: true, type: () => String }, isbn: { required: true, type: () => String }, genre: { required: true, type: () => String }, lenguaje: { required: true, type: () => String }, author: { required: true, type: () => String } };
+    }
 }
 exports.CreateBookDto = CreateBookDto;
 __decorate([

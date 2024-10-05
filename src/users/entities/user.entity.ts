@@ -7,6 +7,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Subject } from 'src/subject/entities/subject.entity';
 
 @Entity()
 export class User {
@@ -30,4 +31,7 @@ export class User {
 
   @OneToMany(() => Book, (book) => book.user)
   books: Book[];
+
+  @OneToMany(() => Subject, (subject) => subject.user)
+  subject: Subject[];
 }

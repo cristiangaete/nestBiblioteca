@@ -1,3 +1,4 @@
+
 import { Author } from '../../author/entities/author.entity';
 import { User } from '../../users/entities/user.entity';
 import {
@@ -27,6 +28,12 @@ export class Book {
 
   @Column()
   genre: string;
+  // @ManyToOne(() => Genre, (genre) => genre.id, {
+  //   eager: true,
+  // })
+  // genre: Genre;
+
+
 
   @Column()
   lenguaje: string;

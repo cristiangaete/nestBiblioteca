@@ -46,6 +46,9 @@ let AuthService = class AuthService {
     async profile({ email, role }) {
         return await this.userService.findOneByEmail(email);
     }
+    async updateProfile(id, updateProfileDto, user) {
+        return await this.userService.update(id, updateProfileDto, user);
+    }
 };
 exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([

@@ -13,10 +13,13 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersController = void 0;
+const openapi = require("@nestjs/swagger");
 const common_1 = require("@nestjs/common");
 const users_service_1 = require("./users.service");
 const create_user_dto_1 = require("./dto/create-user.dto");
 const update_user_dto_1 = require("./dto/update-user.dto");
+const swagger_1 = require("@nestjs/swagger");
+const active_user_decorator_1 = require("../common/decorator/active-user.decorator");
 let UsersController = class UsersController {
     constructor(usersService) {
         this.usersService = usersService;
@@ -30,8 +33,9 @@ let UsersController = class UsersController {
     findOne(id) {
         return this.usersService.findOne(+id);
     }
-    update(id, updateUserDto) {
-        return this.usersService.update(+id, updateUserDto);
+    update(id, updateUserDto, user) {
+        console.log("controller: ", id, updateUserDto, user);
+        return this.usersService.update(+id, updateUserDto, user);
     }
     remove(id) {
         return this.usersService.remove(+id);
@@ -40,6 +44,7 @@ let UsersController = class UsersController {
 exports.UsersController = UsersController;
 __decorate([
     (0, common_1.Post)(),
+    openapi.ApiResponse({ status: 201, type: Object }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_user_dto_1.CreateUserDto]),
@@ -47,12 +52,14 @@ __decorate([
 ], UsersController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
+    openapi.ApiResponse({ status: 200, type: [require("./entities/user.entity").User] }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
+    openapi.ApiResponse({ status: 200, type: String }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -60,20 +67,25 @@ __decorate([
 ], UsersController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Patch)(':id'),
+    openapi.ApiResponse({ status: 200 }),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
+    __param(2, (0, active_user_decorator_1.ActiveUser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_user_dto_1.UpdateUserDto]),
+    __metadata("design:paramtypes", [String, update_user_dto_1.UpdateUserDto, Object]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
+    openapi.ApiResponse({ status: 200, type: String }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "remove", null);
 exports.UsersController = UsersController = __decorate([
+    (0, swagger_1.ApiTags)('User'),
+    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Controller)('users'),
     __metadata("design:paramtypes", [users_service_1.UsersService])
 ], UsersController);

@@ -4,8 +4,11 @@ import { CreateAuthorDto } from './dto/create-author.dto';
 import { UpdateAuthorDto } from './dto/update-author.dto';
 import { Auth } from 'src/auth/decorators/auth.decorator';
 import { Role } from 'src/common/enums/rol.enum';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
-@Auth(Role.ADMIN)
+@ApiTags('Author')
+@ApiBearerAuth()
+@Auth(Role.USER)
 @Controller('author')
 export class AuthorController {
   constructor(private readonly authorService: AuthorService) {}

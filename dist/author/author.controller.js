@@ -13,12 +13,14 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthorController = void 0;
+const openapi = require("@nestjs/swagger");
 const common_1 = require("@nestjs/common");
 const author_service_1 = require("./author.service");
 const create_author_dto_1 = require("./dto/create-author.dto");
 const update_author_dto_1 = require("./dto/update-author.dto");
 const auth_decorator_1 = require("../auth/decorators/auth.decorator");
 const rol_enum_1 = require("../common/enums/rol.enum");
+const swagger_1 = require("@nestjs/swagger");
 let AuthorController = class AuthorController {
     constructor(authorService) {
         this.authorService = authorService;
@@ -42,6 +44,7 @@ let AuthorController = class AuthorController {
 exports.AuthorController = AuthorController;
 __decorate([
     (0, common_1.Post)(),
+    openapi.ApiResponse({ status: 201, type: Object }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_author_dto_1.CreateAuthorDto]),
@@ -49,12 +52,14 @@ __decorate([
 ], AuthorController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
+    openapi.ApiResponse({ status: 200, type: [require("./entities/author.entity").Author] }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], AuthorController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
+    openapi.ApiResponse({ status: 200, type: String }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -62,6 +67,7 @@ __decorate([
 ], AuthorController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Patch)(':id'),
+    openapi.ApiResponse({ status: 200, type: String }),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -70,13 +76,16 @@ __decorate([
 ], AuthorController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
+    openapi.ApiResponse({ status: 200, type: String }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], AuthorController.prototype, "remove", null);
 exports.AuthorController = AuthorController = __decorate([
-    (0, auth_decorator_1.Auth)(rol_enum_1.Role.ADMIN),
+    (0, swagger_1.ApiTags)('Author'),
+    (0, swagger_1.ApiBearerAuth)(),
+    (0, auth_decorator_1.Auth)(rol_enum_1.Role.USER),
     (0, common_1.Controller)('author'),
     __metadata("design:paramtypes", [author_service_1.AuthorService])
 ], AuthorController);

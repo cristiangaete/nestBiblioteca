@@ -9,6 +9,7 @@ import { UserActiveInterface } from '../common/interface/user-active.interface';
 
 import { Role } from '../common/enums/rol.enum';
 
+
 @Injectable()
 export class BooksService {
   constructor(
@@ -17,6 +18,9 @@ export class BooksService {
 
     @InjectRepository(Author)
     private readonly authorRepository: Repository<Author>,
+
+    // @InjectRepository(Genre)
+    // private readonly genreRepository: Repository<Genre>,
   ) {}
 
   async create(createBookDto: CreateBookDto, user: UserActiveInterface) {
@@ -27,11 +31,14 @@ export class BooksService {
     //   throw new BadRequestException('author no found');
     // }
     const author = await this.validateAuthor(createBookDto.author);
+    const genre = await this.validateAuthor(createBookDto.genre);
+
     console.log(user.email, user.id);
 
     return await this.bookRepository.save({
       ...createBookDto,
       author: author,
+      // genre: genre,
       userEmail: user.email,
     });
   }
@@ -57,13 +64,16 @@ export class BooksService {
 
   async update(id: number, updateBookDto: UpdateBookDto, user: UserActiveInterface) {
     // return await this.bookRepository.update(id, updateBookDto);
-    const book = await this.findOne(id, user);
+    // const book = await this.findOne(id, user);
 
-    const author = await this.validateAuthor(updateBookDto.author);
+    // const author = await this.validateAuthor(updateBookDto.author);
+
+    // const genre = await this.validateAuthor(updateBookDto.genre);
 
     return await this.bookRepository.update(id,{
       ...updateBookDto,
       author: updateBookDto.author ? await this.validateAuthor(updateBookDto.author):undefined,
+      // genre: genre,
       userEmail: user.email
     });
 
@@ -84,6 +94,7 @@ export class BooksService {
     const authorEntity = await this.authorRepository.findOneBy({
       name: author,
     });
+    
     if (!author) {
       throw new BadRequestException('author no found');
     }

@@ -26,6 +26,7 @@ let BooksService = class BooksService {
     }
     async create(createBookDto, user) {
         const author = await this.validateAuthor(createBookDto.author);
+        const genre = await this.validateAuthor(createBookDto.genre);
         console.log(user.email, user.id);
         return await this.bookRepository.save({
             ...createBookDto,
@@ -50,8 +51,6 @@ let BooksService = class BooksService {
         return book;
     }
     async update(id, updateBookDto, user) {
-        const book = await this.findOne(id, user);
-        const author = await this.validateAuthor(updateBookDto.author);
         return await this.bookRepository.update(id, {
             ...updateBookDto,
             author: updateBookDto.author ? await this.validateAuthor(updateBookDto.author) : undefined,

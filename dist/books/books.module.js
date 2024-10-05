@@ -20,7 +20,7 @@ let BooksModule = class BooksModule {
 exports.BooksModule = BooksModule;
 exports.BooksModule = BooksModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([book_entity_1.Book]), author_module_1.AuthorModule, users_module_1.UsersModule],
+        imports: [typeorm_1.TypeOrmModule.forFeature([book_entity_1.Book]), author_module_1.AuthorModule, users_module_1.UsersModule,],
         controllers: [books_controller_1.BooksController],
         providers: [books_service_1.BooksService, author_service_1.AuthorService,],
     })

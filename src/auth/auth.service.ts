@@ -5,9 +5,12 @@ import { RegisterDto } from './dto/register.dto';
 import * as bcryptjs from 'bcryptjs';
 import { LoginDto } from './dto/login.dto';
 import { JwtService } from '@nestjs/jwt';
+import { UpdateProfileDto } from './dto/update-profile.dto';
+import { UserActiveInterface } from 'src/common/interface/user-active.interface';
 
 @Injectable()
 export class AuthService {
+    
 
     constructor(
         private readonly userService:UsersService,
@@ -53,4 +56,9 @@ export class AuthService {
         return  await this.userService.findOneByEmail(email);
     }
     
+    async updateProfile(id: number, updateProfileDto: UpdateProfileDto, user: UserActiveInterface){
+
+        return await this.userService.update(id, updateProfileDto, user)
+            
+    }
 }
