@@ -34,7 +34,8 @@ exports.AppModule = AppModule = __decorate([
             auth_module_1.AuthModule,
             subject_module_1.SubjectModule,
             serve_static_1.ServeStaticModule.forRoot({
-                rootPath: (0, path_1.join)(__dirname, '..', 'uploads'),
+                rootPath: (0, path_1.join)(__dirname, '../'),
+                renderPath: '/uploads',
             }),
         ],
         controllers: [],

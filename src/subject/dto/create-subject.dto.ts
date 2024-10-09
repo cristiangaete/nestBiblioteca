@@ -2,11 +2,14 @@ import { IsString } from 'class-validator';
 
 export class CreateSubjectDto {
   @IsString()
-  photo: string;
+  photoName: string;
 
   @IsString()
   subject: string;
 
   @IsString()
   message: string;
+
+  // @IsString()
+  // path: string;
 }

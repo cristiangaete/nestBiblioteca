@@ -14,14 +14,14 @@ const openapi = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class CreateSubjectDto {
     static _OPENAPI_METADATA_FACTORY() {
-        return { photo: { required: true, type: () => String }, subject: { required: true, type: () => String }, message: { required: true, type: () => String } };
+        return { photoName: { required: true, type: () => String }, subject: { required: true, type: () => String }, message: { required: true, type: () => String } };
     }
 }
 exports.CreateSubjectDto = CreateSubjectDto;
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], CreateSubjectDto.prototype, "photo", void 0);
+], CreateSubjectDto.prototype, "photoName", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)

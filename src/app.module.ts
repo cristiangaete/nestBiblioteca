@@ -25,7 +25,8 @@ import { ServeStaticModule } from '@nestjs/serve-static';
     SubjectModule,
     // GenreModule,
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'uploads'), // Carpeta donde se guardan las imágenes
+      rootPath: join(__dirname, '../'), // Carpeta donde se guardan las imágenes
+      renderPath: '/uploads',
     }),
   ],
   controllers: [],

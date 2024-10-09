@@ -15,7 +15,7 @@ const user_entity_1 = require("../../users/entities/user.entity");
 const typeorm_1 = require("typeorm");
 let Subject = class Subject {
     static _OPENAPI_METADATA_FACTORY() {
-        return { id: { required: true, type: () => Number }, photo: { required: true, type: () => String }, subject: { required: true, type: () => String }, message: { required: true, type: () => Object }, timeSubject: { required: true, type: () => Date }, user: { required: true, type: () => require("../../users/entities/user.entity").User }, userEmail: { required: true, type: () => String } };
+        return { id: { required: true, type: () => Number }, photoName: { required: true, type: () => String }, subject: { required: true, type: () => String }, message: { required: true, type: () => Object }, path: { required: true, type: () => Object }, timeSubject: { required: true, type: () => Date }, user: { required: true, type: () => require("../../users/entities/user.entity").User }, userEmail: { required: true, type: () => String } };
     }
 };
 exports.Subject = Subject;
@@ -26,7 +26,7 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], Subject.prototype, "photo", void 0);
+], Subject.prototype, "photoName", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
@@ -35,6 +35,10 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Subject.prototype, "message", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Subject.prototype, "path", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)

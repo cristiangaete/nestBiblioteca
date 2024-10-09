@@ -24,9 +24,9 @@ let SubjectService = class SubjectService {
     }
     async create(createSubjectDto, user, path) {
         console.log(user.email, user.id);
-        createSubjectDto.photo = path;
         return await this.subjectRepository.save({
             ...createSubjectDto,
+            path,
             userEmail: user.email,
         });
     }

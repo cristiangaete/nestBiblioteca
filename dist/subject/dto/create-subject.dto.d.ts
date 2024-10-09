@@ -1,5 +1,5 @@
 export declare class CreateSubjectDto {
-    photo: string;
+    photoName: string;
     subject: string;
     message: string;
 }

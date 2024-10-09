@@ -7,8 +7,9 @@ export declare class SubjectService {
     private readonly subjectRepository;
     constructor(subjectRepository: Repository<Subject>);
     create(createSubjectDto: CreateSubjectDto, user: UserActiveInterface, path: string): Promise<{
+        path: string;
         userEmail: string;
-        photo: string;
+        photoName: string;
         subject: string;
         message: string;
     } & Subject>;

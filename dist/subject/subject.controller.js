@@ -30,12 +30,17 @@ let SubjectController = class SubjectController {
         this.subjectService = subjectService;
     }
     create(createSubjectDto, user, file) {
-        console.log('File: ', file);
-        console.log('filePath:', file.path);
-        return this.subjectService.create(createSubjectDto, user, file.path);
+        const SERVER_URL = "http://192.168.1.97:3000/";
+        console.log(SERVER_URL + file.path);
+        const formattedFilePath = SERVER_URL + file.path.replace(/\\/g, '/');
+        console.log("formattedFilePath: ", formattedFilePath);
+        return this.subjectService.create(createSubjectDto, user, formattedFilePath);
     }
     findAll(user) {
         return this.subjectService.findAll(user);
+    }
+    getImage(imageName, res) {
+        res.sendFile(imageName, { root: 'uploads' });
     }
     findOne(id, user) {
         return this.subjectService.findOne(+id, user);
@@ -53,8 +58,8 @@ __decorate([
         storage: (0, multer_1.diskStorage)({
             destination: './uploads',
             filename: (req, file, cb) => {
-                const randomName = Date.now() + (0, path_1.extname)(file.originalname);
-                cb(null, randomName);
+                const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
+                cb(null, `${randomName}${(0, path_1.extname)(file.originalname)}`);
             },
         }),
     })),
@@ -75,6 +80,15 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], SubjectController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.Get)('uploads/:imageName'),
+    openapi.ApiResponse({ status: 200 }),
+    __param(0, (0, common_1.Param)('imageName')),
+    __param(1, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", void 0)
+], SubjectController.prototype, "getImage", null);
 __decorate([
     (0, common_1.Get)(':id'),
     openapi.ApiResponse({ status: 200, type: require("./entities/subject.entity").Subject }),

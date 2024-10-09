@@ -17,10 +17,14 @@ export class SubjectService {
 
   async create(createSubjectDto: CreateSubjectDto, user: UserActiveInterface, path: string) {
 
+    
     console.log(user.email, user.id);
-    createSubjectDto.photo = path;
+    // createSubjectDto.path = path;
+    // console.log("data:", createSubjectDto.path)
+
     return await this.subjectRepository.save({
       ...createSubjectDto,
+      path,
       userEmail: user.email,
     });
   }

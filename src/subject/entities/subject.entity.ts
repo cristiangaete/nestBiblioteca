@@ -7,13 +7,16 @@ export class Subject {
   id: number;
 
   @Column()
-  photo: string
+  photoName: string
 
   @Column()
   subject: string
 
   @Column()
   message: String
+
+  @Column()
+  path: String
 
   @CreateDateColumn()
   timeSubject: Date
